@@ -2,27 +2,26 @@ pipeline {
   agent none
 
   stages {
-    stage('Back-end: Build Java App') {
+    stage('Back-end: Compile and Run Java App') {
       agent {
         docker { image 'maven:3.8.1-adoptopenjdk-11' }
       }
       steps {
-        echo '🛠️ Building Java Hello World...'
+        echo '🛠️ Compiling and running HelloWorld.java...'
         sh '''
           mkdir -p out
-          echo 'public class HelloWorld { public static void main(String[] args) { System.out.println("Hello from Java!"); } }' > HelloWorld.java
-          javac -d out HelloWorld.java
+          javac -d out src/HelloWorld.java
           java -cp out HelloWorld
         '''
       }
     }
 
-    stage('Front-end: Node Check') {
+    stage('Front-end: Dummy Node Step') {
       agent {
         docker { image 'node:16-alpine' }
       }
       steps {
-        echo '📦 Checking Node.js setup...'
+        echo '📦 Running sample Node.js check...'
         sh '''
           echo "console.log('Hello from Node.js!')" > app.js
           node app.js
@@ -36,7 +35,7 @@ pipeline {
       echo '✅ Build completed successfully!'
     }
     failure {
-      echo '❌ Build failed!'
+      echo '❌ Build failed.'
     }
   }
 }
