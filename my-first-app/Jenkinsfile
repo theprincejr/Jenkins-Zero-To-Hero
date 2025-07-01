@@ -10,7 +10,7 @@ pipeline {
         echo '🛠️ Compiling and running HelloWorld.java...'
         sh '''
           mkdir -p out
-          javac -d out src/HelloWorld.java
+          javac -d out my-first-app/src/HelloWorld.java
           java -cp out HelloWorld
         '''
       }
